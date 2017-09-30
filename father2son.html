@@ -1,0 +1,52 @@
+<!-- 父子组件同步通信 -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.3.4/vue.min.js"></script>
+
+<div id="eg">
+	<div>{{fruits}}</div>
+	<child-com :fdata="fruits"></child-com>
+</div>
+
+<template id="child">
+	<div>
+		<h3>i'm child</h3>
+		<a href="javascript:;" @click="change">更改父组件数据</a>
+		<strong v-text="fdata.apple"></strong>
+	</div>
+</template>
+
+<script>
+	var vm = new Vue({
+
+		data: {
+			fruits: {
+				apple: 'apple is sweet',
+				banana: 'banana is heiheihei'
+			}
+		},
+
+		components: {
+			'child-com': {
+				template: '#child',
+
+				data() {
+					return {
+						
+					}
+				}
+
+				props: {
+					fdata: {
+						type: Object,
+						required: true
+					}
+				},
+
+				methods: {
+					change() {
+						this.fdata.apple = 'apple is Acid'
+					}
+				}
+			}
+		}
+	}).$mount('#eg');
+</script>

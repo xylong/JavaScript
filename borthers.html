@@ -1,0 +1,96 @@
+<!-- 兄弟组件通信 -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.3.4/vue.min.js"></script>
+
+<div id="eg">
+	<go></go>
+	<py></py>
+	<js></js>
+</div>
+
+
+<template id="go">
+	<div style="color: #2780e3;">
+		<span>Go</span>
+		<button @click="send">send2Js</button>
+		<code v-text="nickname"></code>
+	</div>
+</template>
+
+<template id="py">
+	<div style="color: #0593d3;">
+		<span>Python</span>
+		<button @click="send">send2Js</button>
+		<code v-text="nickname"></code>
+	</div>
+</template>
+
+<template id="js">
+	<div style="color: #d14;">
+		<span>Javascript</span>
+		<ul>
+			<li>nickname from go: {{go}}</li>
+			<li>nickname from py: {{py}}</li>
+		</ul>
+	</div>
+</template>
+
+<script>
+	var vm = new Vue();
+
+	var go = {
+		template: '#go',
+		data() {
+			return {
+				nickname: 'golang'
+			}
+		},
+		methods: {
+			send() {
+				vm.$emit('go_nick', this.nickname);
+			}
+		}
+	};
+
+	var py = {
+		template: '#py',
+		data() {
+			return {
+				nickname: 'pypy'
+			}
+		},
+		methods: {
+			send() {
+				vm.$emit('py_nick', this.nickname);
+			}
+		}
+	};
+
+	var js = {
+		template: '#js',
+		data() {
+			return {
+				go: '',
+				py: ''
+			}
+		},
+		mounted() {
+			vm.$on('go_nick', function (val) {
+				this.go = val;
+			}.bind(this));
+
+			vm.$on('py_nick', function (val) {
+				this.py = val;
+			}.bind(this));
+		}
+	}
+
+	var app= new Vue({
+		
+		components: {
+			'go': go,
+			'py': py,
+			'js': js
+		}
+
+	}).$mount('#eg');
+</script>
