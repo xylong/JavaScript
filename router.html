@@ -30,6 +30,10 @@
 	    border: 1px solid #ddd;
 	    border-radius: 3px;
 	}
+	#app {
+		width: 50%;
+		margin: auto;
+	}
 </style>
 
 <div id="app">
@@ -53,7 +57,9 @@
 			<li><router-link to="/video/tv/id/3">电视剧</router-link></li>
 			<li><router-link to="/video/live/id/4">直播</router-link></li>
 		</ul>
-		<router-view></router-view>
+		<transition enter-active-class="animated pulse" leave-active-class="animated fadeOut">
+			<router-view></router-view>
+		</transition>
 	</div>
 </template>
 
