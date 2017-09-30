@@ -1,3 +1,4 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.3.4/vue.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/vue-router/2.7.0/vue-router.min.js"></script>
 
@@ -38,7 +39,10 @@
 		<router-link to="/video">视频</router-link>
 		<router-link to="/draw">画友</router-link>
 	</p>
-	<router-view></router-view>
+	<!-- 过渡动画 -->
+	<transition enter-active-class="animated zoomIn" leave-active-class="animated zoomOut">
+		<router-view></router-view>
+	</transition>
 </div>
 
 <template id="video">
