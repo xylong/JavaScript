@@ -17,6 +17,18 @@
 		color: #f25d8e;
 		font-weight: bold;
 	}
+
+	pre {
+		padding: 10px;
+	    background: #fafafa;
+	    font: 12px / 18px Consolas,monospace,serif;
+	    color: #42b983;
+	    -moz-tab-size: 4;
+	    tab-size: 4;
+	    overflow: auto;
+	    border: 1px solid #ddd;
+	    border-radius: 3px;
+	}
 </style>
 
 <div id="app">
@@ -32,12 +44,18 @@
 <template id="video">
 	<div>
 		<ul>
-			<li><router-link to="/video/douga">动画</router-link></li>
-			<li><router-link to="/video/movie">电影</router-link></li>
-			<li><router-link to="/video/tv">电视剧</router-link></li>
-			<li><router-link to="/video/live">直播</router-link></li>
+			<li><router-link to="/video/douga/id/1">动画</router-link></li>
+			<li><router-link to="/video/movie/id/2">电影</router-link></li>
+			<li><router-link to="/video/tv/id/3">电视剧</router-link></li>
+			<li><router-link to="/video/live/id/4">直播</router-link></li>
 		</ul>
 		<router-view></router-view>
+	</div>
+</template>
+
+<template id="av">
+	<div>
+		<pre>{{ $route.params }}</pre>
 	</div>
 </template>
 
@@ -47,10 +65,7 @@
 	const Video = { template: '#video' };
 	const Draw 	= { template: '<div>画友</div>' };
 
-	const Douga = { template: '<div>douga</div>' };
-	const Movie = { template: '<div>movie</div>' };
-	const Tv 	= { template: '<div>tv</div>' };
-	const Live 	= { template: '<div>live</div>' };
+	const Av = { template: '#av' };
 
 	// 路由
 	const routes = [
@@ -59,10 +74,7 @@
 			path: '/video',
 			component: Video,
 			children: [
-				{ path: 'douga', component: Douga },
-				{ path: 'movie', component: Movie },
-				{ path: 'tv', component: Tv },
-				{ path: 'live', component: Live }
+				{ path: ':av/id/:id', component: Av }
 			]
 		},
 		{ path: '/draw', component: Draw },
