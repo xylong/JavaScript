@@ -1,17 +1,14 @@
+<!-- 插槽 -->
 <style type="text/css">
 	.apple {
-		width: 200px;
-		height: 200px;
 		border: 1px solid seagreen;
 	}
 	.iphone {
-		width: 180;
 	    height: 80px;
 	    background: crimson;
 	    margin: 10 10px;
 	}
 	.mac {
-		width: 180px;
 	    height: 80px;
 	    background: seagreen;
 	    margin: 10 10px;
@@ -22,18 +19,27 @@
 <div id="app"></div>
 
 <script>
+	const son = {
+		template: `<div v-text="data.type"></div>`,
+		inject: ['grandfather', 'data'],
+		mounted() {
+			console.log(this.data.type)
+		}
+	}
 	const componet = {
+		components: {
+			MySon: son
+		},
 		template: `
 		<div class="apple">
-			<div class="iphone"><slot name="iphone"></slot></div>
-			<div class="mac"><slot name="mac"></slot></div>
+			<div class="iphone"><slot name="iphone" :type="type"></slot></div>
+			<div class="mac"><slot name="mac" type="pro"></slot></div>
+			<my-son />
 		</div>`,
 		data () {
 			return {
-				text: ''
+				type: 'x'
 			}
-		},
-		methods: {
 		},
 		mounted () {
 		}
@@ -44,16 +50,33 @@
 		components: {
 			MyApple: componet
 		},
+		provide() {
+			const data = {}
+
+			Object.defineProperty(data, 'type', {
+				get: () => {
+					return this.type
+				},
+				enumerable: true
+			})
+
+			return {
+				grandfather: this,
+				data
+			}
+		},
 		data: {
+			type: 'macbook'
 		},
 		methods: {
 		},
 		template: `
 		<div>
 			<my-apple>
-				<span slot="iphone">iphone</span>
-				<span slot="mac">mac</span>
+				<span slot="iphone" slot-scope="props">iphone {{props.type}}</span>
+				<span slot="mac" slot-scope="props">mac {{props.type}} {{type}}</span>
 			</my-apple>
+			<input type="text" v-model="type">
 		</div>`
 	})
 </script>
