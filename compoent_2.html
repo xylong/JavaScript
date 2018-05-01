@@ -1,0 +1,59 @@
+<style type="text/css">
+	.apple {
+		width: 200px;
+		height: 200px;
+		border: 1px solid seagreen;
+	}
+	.iphone {
+		width: 180;
+	    height: 80px;
+	    background: crimson;
+	    margin: 10 10px;
+	}
+	.mac {
+		width: 180px;
+	    height: 80px;
+	    background: seagreen;
+	    margin: 10 10px;
+	}
+</style>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+<div id="app"></div>
+
+<script>
+	const componet = {
+		template: `
+		<div class="apple">
+			<div class="iphone"><slot name="iphone"></slot></div>
+			<div class="mac"><slot name="mac"></slot></div>
+		</div>`,
+		data () {
+			return {
+				text: ''
+			}
+		},
+		methods: {
+		},
+		mounted () {
+		}
+	}
+
+	new Vue({
+		el: '#app',
+		components: {
+			MyApple: componet
+		},
+		data: {
+		},
+		methods: {
+		},
+		template: `
+		<div>
+			<my-apple>
+				<span slot="iphone">iphone</span>
+				<span slot="mac">mac</span>
+			</my-apple>
+		</div>`
+	})
+</script>
