@@ -1,0 +1,49 @@
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+<div id="app"></div>
+
+<script>
+	const componet = {
+		template: `
+		<div>
+			<input name="text" v-model="text">
+			<span v-text="appleName" @click="onChange"></span>
+		</div>`,
+		props: {
+			appleName: String,
+		},
+		data () {
+			return {
+				text: ''
+			}
+		},
+		methods: {
+			onChange () {
+				this.$emit('change')
+			}
+		},
+		mounted () {
+		}
+	}
+
+	new Vue({
+		el: '#app',
+		components: {
+			MyApple: componet
+		},
+		data: {
+			phone: 'iphone8',
+			mac: 'mac pro'
+		},
+		methods: {
+			handleChange () {
+				this.phone = 'iphonex'
+			}
+		},
+		template: `
+		<div>
+			<my-apple :apple-name="phone" @change="handleChange"></my-apple>
+			<my-apple :apple-name="mac"></my-apple>
+		</div>`
+	})
+</script>
